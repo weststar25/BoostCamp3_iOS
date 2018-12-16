@@ -20,6 +20,15 @@ class DetailVC: UIViewController {
     
     @IBOutlet weak var movieDetailInfoTableView: UITableView!
     
+    @objc func posterImgTapGesture(_ sender: UIGestureRecognizer) {
+        guard let pfspVC = storyboard?.instantiateViewController(withIdentifier: "PosterFullScreenPopupVC") as? PosterFullScreenPopupVC else{
+            return
+        }
+        guard let movieInfo = self.movieInfo else { return }
+        pfspVC.path = movieInfo.image
+        self.present(pfspVC, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNavigationBar()
@@ -84,6 +93,8 @@ extension DetailVC: UITableViewDelegate, UITableViewDataSource {
                 movieRatingIcon = #imageLiteral(resourceName: "LaunchScreenImg.png")
             }
             cell.posterImgView.downloaded(from: movieInfo.image)
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(self.posterImgTapGesture(_:)))
+            cell.addGestureRecognizer(gesture)
             cell.movieTitleLabel.text = movieInfo.title
             cell.movieRatingIcon.image = movieRatingIcon
             cell.releaseDateLabel.text = movieInfo.date + " 개봉"
