@@ -13,7 +13,6 @@ class TableListVC : UIViewController {
     var orderType: Int = 0
     var errorMsg: String = ""
     var movieList: [MovieListVO] = []
-    var posterImgPathes: [UIImage] = []
     let boxOfficeService: BoxOfficeService = BoxOfficeService()
     
     @IBOutlet weak var movieListTableView: UITableView!
@@ -48,22 +47,16 @@ class TableListVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.movieListTableView.delegate = self
+        self.movieListTableView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        movieListTableView.delegate = self
-        movieListTableView.dataSource = self
-        
         self.getMovieListHandler(self.orderType)
         
         self.navigationItem.title = "예매율순"
-    }
-    
-    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    func localFilePath(for url: URL) -> URL {
-        return documentsPath.appendingPathComponent(url.lastPathComponent)
     }
     
     func getMovieListHandler(_ orderType: Int) {
