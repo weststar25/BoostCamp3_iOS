@@ -49,14 +49,13 @@ class CollectionListVC : UIViewController {
         super.viewDidLoad()
         self.movieListCollectionView.delegate = self
         self.movieListCollectionView.dataSource = self
+        self.navigationItem.title = "예매율순"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.getMovieListHandler(self.orderType)
-        
-        self.navigationItem.title = "예매율순"
     }
     
     func getMovieListHandler(_ orderType: Int) {
@@ -75,7 +74,12 @@ class CollectionListVC : UIViewController {
 
 extension CollectionListVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        guard let dvc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else{
+            return
+        }
+        dvc.movieId = self.movieList[indexPath.row].id
+        dvc.movieTitle = self.movieList[indexPath.row].title
+        navigationController?.pushViewController(dvc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

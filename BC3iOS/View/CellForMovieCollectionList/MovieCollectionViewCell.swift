@@ -9,6 +9,31 @@
 import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
+    private let highlightedColor = UIColor(hexString: "C6C6C6")
+    var shouldTintBackgroundWhenSelected = true
+    var specialHighlightedArea: UIView?
+    
+    override var isHighlighted: Bool {
+        willSet {
+            onSelected(newValue)
+        }
+    }
+    
+    override var isSelected: Bool {
+        willSet {
+            onSelected(newValue)
+        }
+    }
+    func onSelected(_ newValue: Bool) {
+        guard selectedBackgroundView == nil else { return }
+        if shouldTintBackgroundWhenSelected {
+            contentView.backgroundColor = newValue ? highlightedColor : UIColor.clear
+        }
+        if let sa = specialHighlightedArea {
+            sa.backgroundColor = newValue ? UIColor.black.withAlphaComponent(0.4) : UIColor.clear
+        }
+    }
+    
     @IBOutlet weak var posterImgView: UIImageView!
     @IBOutlet weak var movieTitleLabel: UILabel!
     @IBOutlet weak var movieRatingIcon: UIImageView!

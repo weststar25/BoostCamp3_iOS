@@ -49,14 +49,13 @@ class TableListVC : UIViewController {
         super.viewDidLoad()
         self.movieListTableView.delegate = self
         self.movieListTableView.dataSource = self
+        self.navigationItem.title = "예매율순"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.getMovieListHandler(self.orderType)
-        
-        self.navigationItem.title = "예매율순"
     }
     
     func getMovieListHandler(_ orderType: Int) {
@@ -75,8 +74,14 @@ class TableListVC : UIViewController {
 }
 
 extension TableListVC: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        guard let dvc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC else{
+                return
+        }
+        dvc.movieId = self.movieList[indexPath.row].id
+        dvc.movieTitle = self.movieList[indexPath.row].title
+        navigationController?.pushViewController(dvc, animated: true)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.movieList.count

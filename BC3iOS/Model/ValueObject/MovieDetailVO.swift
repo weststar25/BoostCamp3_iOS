@@ -11,24 +11,31 @@ import Foundation
 struct MovieDetailVO: Codable {
     let audience: Int
     let grade: Int
-    let actor: String?
+    let actor: String
     let duration: Int
     let reservation_grade: Int
-    let title: String?
+    let title: String
     let reservation_rate: Double
     let user_rating: Double
-    let date: String?
-    let director: String?
-    let id: String?
-    let image: String?
-    let synopsis: String?
-    let genre: String?
+    let date: String
+    let director: String
+    let id: String
+    let image: String
+    let synopsis: String
+    let genre: String
+}
+
+struct MovieDetailCommentResult: Codable {
+    let movie_id: String
+    let comments: [MovieDetailCommentVO]
 }
 
 struct MovieDetailCommentVO: Codable {
-    let rating: Int
+    let rating: Double
     let timestamp: Double
-    let writer: String?
-    let movie_id: String?
-    let contents: String?
+    let contents: String
+    let movie_id: String
+    let writer: String
+    let id: String
 }
+
