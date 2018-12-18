@@ -94,7 +94,8 @@ extension DetailVC: UITableViewDelegate, UITableViewDataSource {
             }
             cell.posterImgView.downloaded(from: movieInfo.image)
             let gesture = UITapGestureRecognizer(target: self, action: #selector(self.posterImgTapGesture(_:)))
-            cell.addGestureRecognizer(gesture)
+            cell.posterImgView.isUserInteractionEnabled = true
+            cell.posterImgView.addGestureRecognizer(gesture)
             cell.movieTitleLabel.text = movieInfo.title
             cell.movieRatingIcon.image = movieRatingIcon
             cell.releaseDateLabel.text = movieInfo.date + " 개봉"
